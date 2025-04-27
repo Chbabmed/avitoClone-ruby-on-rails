@@ -8,3 +8,75 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+.signup-card {
+    background-color: #EDE6E3; /* Isabelline */
+    border: none;
+    border-radius: 1rem;
+}
+
+.custom-btn {
+    background-color: #F06449; /* Tomato */
+    border-color: #F06449;
+}
+
+.custom-btn:hover {
+    background-color: #5BC3EB; /* Vivid sky blue */
+    border-color: #5BC3EB;
+}
+
+body {
+    background-color: #DADAD9; /* Platinum */
+}
+
+.devise-links a {
+    display: inline-block;
+    margin: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #5BC3EB; /* Vivid sky blue */
+    color: #fff;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.devise-links a:hover {
+    background-color: #F06449; /* Tomato on hover */
+    color: #fff;
+}
+
+
+.login-card {
+    background-color: #EDE6E3; /* Isabelline */
+    border: none;
+    border-radius: 1rem;
+}
+
+.custom-btn {
+    background-color: #5BC3EB; /* Vivid sky blue */
+    border-color: #5BC3EB;
+}
+
+.custom-btn:hover {
+    background-color: #F06449; /* Tomato */
+    border-color: #F06449;
+}
+
+body {
+    background-color: #DADAD9; /* Platinum */
+}
+
+.devise-links a {
+    display: inline-block;
+    margin: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #5BC3EB;
+    color: #fff;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.devise-links a:hover {
+    background-color: #F06449;
+    color: #fff;
+}
