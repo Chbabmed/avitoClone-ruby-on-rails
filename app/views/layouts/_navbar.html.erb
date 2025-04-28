@@ -1,37 +1,39 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<nav class=" bg-dark navbar navbar-expand-lg bg-white rounded-bottom-3">
+    <!-- Logo -->
+    <a class="navbar-brand fw-bold" href="#">
+      Avito Clone
+    </a>
+
+    <!-- Toggle button for mobile -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+    <!-- Navbar content -->
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <!-- Left side: Categories -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>
+          <% Category.all.each do |category| %>
+          <li class="nav-item opacity-75">
+            <%= link_to category.name.capitalize, category_path(category), class: "nav-link text-black" %>
+          </li>
+        <% end %>
       </ul>
 
-      <%= button_to destroy_user_session_path, method: :delete, class: "btn btn-danger logout-btn" do %>
-        Logout
+
+
+      <!-- Right side: Buttons -->
+      <% if user_signed_in? %>
+        <!-- If signed in -->
+        <%= link_to "Publier une annonce", new_annoncement_path, class: "btn btn-danger ms-3" %>
+        <%= button_to destroy_user_session_path, method: :delete, class: "btn btn-outline-secondary ms-2" do %>
+          Se Déconnecter
+        <% end %>
+      <% else %>
+        <!-- If not signed in -->
+        <%= link_to "Se Connecter", new_user_session_path, class: "btn btn-outline-secondary ms-2" %>
+        <%= link_to "Publier une annonce", new_user_session_path, class: "btn btn-danger ms-3" %>
       <% end %>
 
     </div>
-  </div>
 </nav>

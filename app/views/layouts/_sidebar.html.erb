@@ -1,0 +1,58 @@
+<div class="d-flex flex-column flex-shrink-0 p-3 sidebar bg-transparent w-auto">
+
+  <div class="w-100 mb-4 text-center">
+    <a href="/" class="fw-bold fs-4 text-decoration-none text-black">
+      Avito Clone
+    </a>
+  </div>
+
+  <hr>
+
+  <!-- Dashboard and My Announcements (only if logged in) -->
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item mb-2 under">
+        <%= link_to "Home page", root_path, class: "nav-link text-black" %>
+      </li>
+      <% if user_signed_in? %>
+    <li class="nav-item mb-2 under">
+        <%= link_to "Dashboard", dashboard_path, class: "nav-link text-black " %>
+      </li>
+      <li class="nav-item mb-2 under">
+        <%= link_to "My Announcements", annoncements_path, class: "nav-link text-black link-underline-opacity-0" %>
+        <!-- user_announcements_path(current_user)-->
+      </li>
+      <% end %>
+
+    </ul>
+    <hr>
+
+
+  <!-- Categories Filter -->
+  <h6 class="text-black mt-3">Categories</h6>
+  <ul class="nav nav-pills flex-column mb-auto">
+    <% Category.all.each do |category| %>
+      <li class="nav-item mb-1">
+        <%= link_to category.name, category_path(category), class: "nav-link text-black" %>
+      </li>
+    <% end %>
+  </ul>
+
+  <hr>
+
+  <!-- Login / Logout -->
+  <div class="mt-auto">
+    <% if user_signed_in? %>
+      <!-- If signed in, show the "Add Announcement" button -->
+      <%= link_to "Add Announcement", new_annoncement_path, class: "btn btn-success mb-2 text-white " %>
+
+      <!-- Logout Button -->
+      <%= button_to destroy_user_session_path, method: :delete, class: "btn btn-danger" do %>
+        Logout
+      <% end %>
+    <% else %>
+      <%= link_to "Add Announcement", new_user_session_path, class: "btn btn-success mb-2" %>
+      <!-- If not signed in, show Login button -->
+      <%= link_to "Login", new_user_session_path, class: "btn btn-primary ms-2" %>
+    <% end %>
+  </div>
+</div>

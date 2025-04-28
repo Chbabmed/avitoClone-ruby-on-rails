@@ -1,0 +1,20 @@
+<div id="carouselExampleFade" class="carousel slide carousel-fade autoplay p-4" data-bs-ride="carousel" data-bs-interval="3000">  <div class="carousel-inner">
+    <% Annoncement.all.each_with_index do |annoncement, index| %>
+      <div class="carousel-item <%= 'active' if index == 0 %>">
+        <% if annoncement.images.attached? %>
+          <%= image_tag annoncement.images[0], class: "d-block w-100", alt: "#{annoncement.title}" %>
+        <% else %>
+          <p>No image available</p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>

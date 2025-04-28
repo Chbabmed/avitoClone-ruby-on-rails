@@ -14,4 +14,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def authenticate_user!
+    unless user_signed_in? # This method is available in Devise
+      redirect_to root_path, alert: "You must log in to access this page."
+    end
+  end
+
+
 end
