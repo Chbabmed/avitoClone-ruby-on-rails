@@ -1,13 +1,30 @@
 Rails.application.routes.draw do
   get "dashboard/index"
-  resources :annoncements
-  resources :categories
+  resources :annoncements do
+    member do
+      get :show_product # Adds /annoncements/:id/show_product route
+      get :show_product, to: 'annoncements#show_product'
+    end
+  end
+
+
+
+  resources :categories, only: [] do
+    get 'filter_page', to: 'categories#filter_page', on: :member
+  end
+
+
+  resources :dashboard, only: [:index]
 
   devise_for :users
   root "home#index"
 
 
   get 'dashboard', to: 'dashboard#index'
+
+  get 'filter_page/:name', to: 'dashboard#filter_page', as: 'filter_page'
+
+  post '/annoncements/:id/request_price', to: 'annoncements#request_price', as: 'request_price'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

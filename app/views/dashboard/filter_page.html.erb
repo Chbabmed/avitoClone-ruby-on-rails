@@ -1,0 +1,27 @@
+<div class="container mt-5">
+  <h1 class="mb-4">Annoncements in <%= @category.name %></h1>
+
+  <% if @annoncements.any? %>
+    <div class="row">
+      <% @annoncements.each do |annoncement| %>
+        <div class="col-md-4 mb-4">
+          <div class="card shadow-sm">
+            <% if annoncement.images.attached? %>
+              <%= image_tag annoncement.images.first, class: "card-img-top img-fluid", alt: annoncement.title %>
+            <% else %>
+              <img src="https://via.placeholder.com/150" class="card-img-top img-fluid" alt="Placeholder">
+            <% end %>
+
+            <div class="card-body">
+              <h5 class="card-title"><%= link_to annoncement.title, annoncement_path(annoncement), class: "text-decoration-none text-dark" %></h5>
+              <p class="card-text text-truncate"><%= annoncement.description %></p>
+              <p class="card-text"><strong>Price:</strong> <%= number_to_currency(annoncement.price, unit: "€") %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p>No annoncement found for this category.</p>
+  <% end %>
+</div>

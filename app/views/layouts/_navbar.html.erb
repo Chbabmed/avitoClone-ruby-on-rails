@@ -1,6 +1,6 @@
 <nav class=" bg-dark navbar navbar-expand-lg bg-white rounded-bottom-3">
     <!-- Logo -->
-    <a class="navbar-brand fw-bold" href="#">
+    <a class="navbar-brand fw-bold" href="/">
       Avito Clone
     </a>
 
@@ -15,7 +15,7 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <% Category.all.each do |category| %>
           <li class="nav-item opacity-75">
-            <%= link_to category.name.capitalize, category_path(category), class: "nav-link text-black" %>
+            <%= link_to category.name.capitalize, annoncements_path(category: category.id, name: category.name.capitalize), class: "nav-link text-black" %>
           </li>
         <% end %>
       </ul>
