@@ -1,0 +1,30 @@
+<%= form_with(model: category, html: { multipart: true }, class: "p-4 border rounded shadow-sm") do |form| %>
+  <% if category.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
+      <ul>
+        <% category.errors.each do |attribute, message| %>
+          <li><%= attribute.to_s.humanize %> <%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Name Field -->
+  <div class="mb-3">
+    <%= form.label :name, "Category Name", class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", placeholder: "Enter category name" %>
+  </div>
+
+  <!-- Icon Upload Field -->
+  <div class="mb-3">
+    <%= form.label :icon, "Category Icon", class: "form-label" %>
+    <%= form.file_field :icon, class: "form-control" %>
+    <small class="form-text text-muted">Upload an image to represent this category (e.g., .jpg, .png).</small>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="text-center">
+    <%= form.submit "Save Category", class: "btn btn-primary" %>
+  </div>
+<% end %>

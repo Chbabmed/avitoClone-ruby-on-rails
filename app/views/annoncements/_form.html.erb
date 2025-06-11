@@ -1,0 +1,81 @@
+
+  <%= form_with(model: @annoncement, local: true) do |form| %>
+    <% if @annoncement.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@annoncement.errors.count, "error") %> prohibited this annoncement from being saved:</h2>
+
+        <ul>
+          <% @annoncement.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <!-- Title -->
+    <div class="mb-3">
+      <%= form.label :title, class: "form-label" %>
+      <%= form.text_field :title, class: "form-control" %>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-3">
+      <%= form.label :description, class: "form-label" %>
+      <%= form.text_area :description, class: "form-control" %>
+    </div>
+
+    <!-- Price -->
+    <div class="mb-3">
+      <%= form.label :price, class: "form-label" %>
+      <%= form.number_field :price, class: "form-control" %>
+    </div>
+
+    <!-- Category Select -->
+    <div class="mb-3">
+      <%= form.label :category_id, "Category", class: "form-label" %>
+      <%= form.collection_select :category_id,
+                                 Category.all.map { |category| [category.name.capitalize, category.id] },
+                                 :second,
+                                 :first,
+                                 { prompt: "Select a category" },
+                                 { class: "form-select" } %>
+    </div>
+
+    <!-- Images Upload (optional) -->
+    <!-- Placeholder for the Bootstrap alert -->
+    <div id="images-alert" class=" text-danger d-none" role="alert">
+      Alert : You can only upload up to 3 images.
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :images, "Upload Images", class: "form-label" %>
+      <%= form.file_field :images, multiple: true, class: "form-control", id: "images_upload_field" %>
+      <small class="form-text text-muted">You can upload up to 3 images.</small>
+    </div>
+
+
+
+    <div class="actions  d-flex justify-content-end">
+      <%=  link_to "Back to annoncements", annoncements_path, class: "btn btn-outline-secondary mx-3", style:"border: solid 2px grey; " %>
+      <%= form.submit "Save Annoncement", class: "btn btn-primary" %>
+    </div>
+
+
+  <% end %>
+
+  <script>
+      document.getElementById("images_upload_field").addEventListener("change", function () {
+          const alertDiv = document.getElementById("images-alert");
+
+          if (this.files.length > 3) {
+              // Add Bootstrap's "d-block" class to make the alert visible
+              alertDiv.classList.remove("d-none");
+              alertDiv.classList.add("d-block");
+              this.value = ""; // Clear the selection
+          } else {
+              // Hide the alert if the selection is valid
+              alertDiv.classList.remove("d-block");
+              alertDiv.classList.add("d-none");
+          }
+      });
+  </script>

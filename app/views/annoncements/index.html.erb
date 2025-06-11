@@ -1,0 +1,151 @@
+<%# app/views/annoncements/index.html.erb %>
+
+<% content_for :title, "Annoncements" %>
+<div class="container min-vh-100">
+<!--  <%# if notice.present? %>
+    <div class="alert alert-success text-center" role="alert">
+      <%#= notice %>
+    </div>
+  <%# end %>-->
+
+  <% if user_signed_in? %>
+    <h1>My Annoncements</h1>
+
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mt-2">
+      <ol class="breadcrumb" style="border-radius: 8px; padding-left: 3px; margin-top: -5px; opacity: 0.8; font-size: 15px;">
+        <li class="breadcrumb-item"><a href="/" style="text-decoration: none; color:#565757">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">My Annoncements</li>
+      </ol>
+    </nav>
+    <hr class="border border-2 opacity-75 rounded">
+    <div class="d-flex align-items-center justify-content-end mb-4">
+      <%= link_to "Ajouter Annonce", new_annoncement_path, class: "btn btn-primary" %>
+    </div>
+
+  <% else %>
+    <h1>Annoncements Of <%= @nameCat %></h1>
+  <% end %>
+
+  <%# List of Annoncements %>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="annoncements">
+    <% if @annoncements.count > 0 %>
+      <% @annoncements.each do |annoncement| %>
+        <div class="col">
+          <!-- Annoncement Card -->
+          <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <% if annoncement.images.attached? %>
+                  <%= image_tag(annoncement.images.first, class: 'img-fluid rounded-start', alt: 'Annonce Image', style: 'object-fit: cover; width: 100%; height: 100%;') %>
+                <% else %>
+                  <img src="path/to/default_image.jpg" class="img-fluid rounded-start" alt="Default Image">
+                <% end %>
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title"><%= annoncement.title %></h5>
+                  <p class="card-text"><%= truncate(annoncement.description, length: 100) %></p>
+                  <p class="card-text">
+                    <small class="text-body-secondary">Last updated <%= time_ago_in_words(annoncement.updated_at) %> ago</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer bg-white border-0 text-end">
+              <!-- Button to open modals -->
+              <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#contactModal_<%= annoncement.id %>">
+                Contact
+              </button>
+              <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#modalAnnoncement_<%= annoncement.id %>">
+                See Details
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal for Annoncement Details -->
+        <div class="modal fade" id="modalAnnoncement_<%= annoncement.id %>" tabindex="-1" aria-labelledby="modalLabel_<%= annoncement.id %>" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel_<%= annoncement.id %>"><%= annoncement.title %></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <% if annoncement.images.attached? %>
+                  <!-- Carousel for images -->
+                  <div id="carousel_<%= annoncement.id %>" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                      <% annoncement.images.each_with_index do |image, index| %>
+                        <button
+                          type="button"
+                          data-bs-target="#carousel_<%= annoncement.id %>"
+                          data-bs-slide-to="<%= index %>"
+                          class="<%= 'active' if index == 0 %>"
+                          aria-current="<%= index == 0 %>"
+                        ></button>
+                      <% end %>
+                    </div>
+                    <div class="carousel-inner">
+                      <% annoncement.images.each_with_index do |image, index| %>
+                        <div class="carousel-item <%= 'active' if index == 0 %>">
+                          <%= image_tag(image, class: 'd-block w-100') %>
+                        </div>
+                      <% end %>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel_<%= annoncement.id %>" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carousel_<%= annoncement.id %>" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                  </div>
+                <% end %>
+                <p><strong>Description:</strong> <%= annoncement.description %></p>
+              </div>
+              <div class="modal-footer">
+                <% if user_signed_in? %>
+                  <%= link_to "Edit", edit_annoncement_path(annoncement), class: "btn btn-warning" %>
+                  <%= button_to "Delete", annoncement_path(annoncement), method: :delete, class: "btn btn-danger" %>
+                <% end %>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal for Contact Information -->
+        <div class="modal fade" id="contactModal_<%= annoncement.id %>" tabindex="-1" aria-labelledby="contactModalLabel_<%= annoncement.id %>" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="contactModalLabel_<%= annoncement.id %>">Contact Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <% if annoncement.user.present? %>
+                  <p><strong>Phone Number:</strong> <%= annoncement.user.phone %></p>
+                  <p><strong>Email Address:</strong> <%= annoncement.user.email %></p>
+                <% else %>
+                  <p>Contact information is not available for this annoncement.</p>
+                <% end %>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="container mt-5 h-auto d-flex justify-content-center" style="height: 80px !important;">
+        <div class="alert alert-info text-center w-100" role="alert">
+          No announcements available.
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

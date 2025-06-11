@@ -1,0 +1,23 @@
+<p style="color: green"><%= notice %></p>
+
+<!-- Display the category details -->
+<div>
+  <!-- Display the icon if attached -->
+  <% if @category.icon.attached? %>
+    <div>
+      <%= image_tag @category.icon, class: "img-fluid rounded", style: "width: 100px; height: 100px; object-fit: cover;", alt: "Category Icon" %>
+    </div>
+  <% else %>
+    <p style="color: gray">No icon available for this category</p>
+  <% end %>
+</div>
+
+<!-- Display other category details -->
+<%= render @category %>
+
+<div>
+  <%= link_to "Edit this category", edit_category_path(@category) %> |
+  <%= link_to "Back to categories", categories_path %>
+
+  <%= button_to "Destroy this category", @category, method: :delete, class: "btn btn-danger" %>
+</div>

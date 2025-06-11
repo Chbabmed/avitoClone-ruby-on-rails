@@ -1,0 +1,135 @@
+
+  <div class="col-12">
+
+    <section class="py-4 bg-white">
+      <div class="container-fluid">
+
+        <!-- Search Bar -->
+        <form class="row g-2 mb-4 align-items-center">
+
+          <!-- Search input -->
+          <div class="col-12 col-md-4">
+            <input type="text" class="form-control rounded-3" placeholder="Que recherchez-vous ?">
+          </div>
+
+          <!-- Category Selector -->
+          <div class="col-6 col-md-3">
+            <div class="input-group">
+              <span class="input-group-text bg-white border-0"><i class="bi bi-grid-3x3-gap-fill"></i></span>
+              <select class="form-select rounded-3">
+                <option selected>Toutes les catégories</option>
+                <option>Immobilier</option>
+                <option>Véhicules</option>
+                <option>Marketplace</option>
+                <option>Emplois et Services</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Location Selector -->
+          <div class="col-6 col-md-3">
+            <div class="input-group">
+              <span class="input-group-text bg-white border-0"><i class="bi bi-geo-alt-fill"></i></span>
+              <input type="text" class="form-control rounded-3" placeholder="Choisir ville - secteur">
+            </div>
+          </div>
+
+          <!-- Search Button -->
+          <div class="col-12 col-md-2">
+            <button type="submit" class="btn btn-primary w-100 rounded-3">
+              <i class="bi bi-search"></i> Rechercher
+            </button>
+          </div>
+
+        </form>
+
+        <!-- Categories Section -->
+        <div class="row g-4">
+
+          <!-- Immobilier -->
+          <div class="col-6 col-md-3">
+            <div class="p-3 rounded-3 text-center" style="background-color: #e7f1ff;">
+              <i class="bi bi-house-door-fill fs-1 text-primary"></i>
+              <h6 class="mt-2">Immobilier</h6>
+            </div>
+          </div>
+
+          <!-- Véhicules -->
+          <div class="col-6 col-md-3">
+            <div class="p-3 rounded-3 text-center" style="background-color: #ffe7ea;">
+              <i class="bi bi-truck-front-fill fs-1 text-danger"></i>
+              <h6 class="mt-2">Véhicules</h6>
+            </div>
+          </div>
+
+          <!-- Marketplace -->
+          <div class="col-6 col-md-3">
+            <div class="p-3 rounded-3 text-center" style="background-color: #e8f8e5;">
+              <i class="bi bi-cart-fill fs-1 text-success"></i>
+              <h6 class="mt-2">Marketplace</h6>
+            </div>
+          </div>
+
+          <!-- Emplois et Services -->
+          <div class="col-6 col-md-3">
+            <div class="p-3 rounded-3 text-center" style="background-color: #e5f5f3;">
+              <i class="bi bi-person-workspace fs-1 text-info"></i>
+              <h6 class="mt-2">Emplois et Services</h6>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+
+  <div class="col-12 mb-4 p-4">
+    <%= render "home/carousel" %>
+  </div>
+
+  <div class="col-12">
+
+    <% if Category.joins(:annoncements).any? %>
+      <% Category.includes(:annoncements).each do |category| %>
+        <% if category.annoncements.any? %> <!-- Only display the category section if it has announcements -->
+          <div class="mb-5">
+            <h2 class="section-title"><%= category.name.capitalize %></h2>
+            <div class="row">
+              <% category.annoncements.each do |annoncement| %>
+                <div class="col-md-3 mb-4">
+                  <div class="card h-100">
+                    <% if annoncement.images.attached? %>
+                      <%= image_tag annoncement.images.first, class: "card-img-top card-img", alt: annoncement.title %>
+                    <% else %>
+                      <img src="https://via.placeholder.com/150" class="card-img-top card-img" alt="<%= annoncement.title %>">
+                    <% end %>
+                    <div class="card-body">
+                      <h5 class="card-title"><%= annoncement.title %></h5>
+                      <p class="card-text"><%= truncate(annoncement.description, length: 100) %></p>
+                      <%= link_to 'View Details', show_product_annoncement_path(annoncement), class: "btn btn-primary btn-sm" %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% else %>
+      <div class="alert alert-info mt-5">
+        No announcements available currently.
+      </div>
+    <% end %>
+
+  </div>
+
+
+
+
+
+
+
+
+
