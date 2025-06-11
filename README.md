@@ -1,4 +1,5 @@
 🛍️ Avito Clone
+
 A Ruby on Rails web application that replicates the popular Avito marketplace interface with full CRUD functionality for classified ads management.
 
 🛠️ Technologies Used
