@@ -3,6 +3,7 @@
 A Ruby on Rails web application that replicates the popular Avito marketplace interface with full CRUD functionality for classified ads management.
 
 🛠️ Technologies Used
+
 Backend: Ruby on Rails 7+
 Database: SQLite3
 Frontend: HTML5, CSS3, Bootstrap
@@ -11,6 +12,7 @@ Image Processing: Active Storage
 Testing: RSpec
 
 🎯 Key Features
+
 Listings Management
 Create new classified ads with details, images, and pricing
 Edit and update existing listings
